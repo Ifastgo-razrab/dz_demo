@@ -85,9 +85,10 @@ func raspredelenie(vibor int, fs[]float64)(float64 , string){
 }
 func amg(fs []float64)float64{
 	var sum , nomer float64
-	for index, value := range fs{
+	nomer = 0
+	for _, value := range fs{
 		sum += value
-		nomer = float64(index)
+		nomer ++
 		
 		
 	}
