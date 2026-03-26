@@ -5,19 +5,29 @@ import (
 	"errors"
 )
 
-const USDvEUR = 0.8436
-const USDvRUB = 76.62
-const EURvRUB = USDvRUB / USDvEUR
-const EURvUSD = 1 / USDvEUR
-const RUBvUSD = 1 /USDvRUB
-const RUBvEUR = 1 / EURvRUB
+type valutemap = map[string]map[string]float64
 
 func main() {
 	fmt.Println("___Программа для обмена Валют____")
-	
+	full_kurc := valutemap{
+		"USD": {
+			"EUR" : 0.8436,
+			"RUB" : 76.62,
+		},
+		"EUR": {
+			"RUB" : 90.82,
+			"USD" : 1.18,
+		},
+		"RUB": {
+			"USD" : 0.013,
+			"EUR" : 0.011,
+		},
+	}
+	fmt.Println(full_kurc["EUR"])
+
 		var  namber float64
 		var base_currency , target_currency string
-		var err , ererr , err2  error
+		var err , ererr   error
 		for {
 			base_currency ,  err = outprint()
 			if err != nil {
@@ -38,16 +48,13 @@ func main() {
 			}
 		}
 		for{
-			target_currency , err2 = reverschat(base_currency)
-			if err2 != nil {
-				continue	
-			}else{
-				fmt.Println("Вы выбрали :", target_currency)
-				break
-			}
+			target_currency = reverschat(base_currency , full_kurc)
+			
+			fmt.Println("Вы выбрали :", target_currency)
+			break
 		}
 		
-		result := valute(namber , base_currency , target_currency)
+		result := valute(namber , base_currency , target_currency, full_kurc)
 		fmt.Println("Результат : ", result)
 		
 
@@ -88,36 +95,15 @@ func namberto() (float64 , error){
 }
 
 
-func reverschat(base_currency string) (string ,error) {
+func reverschat(base_currency string, full_kurc valutemap) (string ) {
 	var target_currency string
-	switch {
-		case base_currency == "EUR":
-			fmt.Print("Введите целивую валюту(RUB ,USD) :")
-			fmt.Scan(&target_currency)
-			if target_currency != "EUR" && target_currency != "USD" && target_currency != "RUB"  {
-				return "",  errors.New("NO")
-			}
-			return target_currency , nil
-
-		case base_currency == "RUB":
-			fmt.Print("Введите целивую валюту(EUR ,USD) :")
-			fmt.Scan(&target_currency)
-			if target_currency != "EUR" && target_currency != "USD" && target_currency != "RUB"  {
-				return "",  errors.New("NO")
-			}
-			return target_currency , nil
-
-		case base_currency == "USD":
-			fmt.Print("Введите целивую валюту(RUB ,EUR) :")
-			fmt.Scan(&target_currency)
-			if target_currency != "EUR" && target_currency != "USD" && target_currency != "RUB"  {
-				return "",  errors.New("NO")
-			}
-			return target_currency , nil
-
+	viktor := []string{}
+	for key , _ := range full_kurc[base_currency]{
+		viktor = append(viktor, key)
 	}
-	
-	return "" , nil
+	fmt.Print("Выберите целевую валютную пару",viktor , ": ")
+	fmt.Scan(&target_currency)
+	return target_currency 
 }
 	
 	
@@ -126,30 +112,14 @@ func reverschat(base_currency string) (string ,error) {
 
 
 
-func valute(number float64, base_currency string, target_currency string) float64{
+func valute(number float64, base_currency string, target_currency string , m valutemap) float64{
 	var result float64
-	switch{
-		case base_currency == "USD" && target_currency == "EUR":
-			result = USDvEUR * number
-			return result
-		case base_currency == "USD" && target_currency == "RUB":
-			result = USDvRUB * number
-			return result
-		case base_currency == "EUR" && target_currency == "RUB":
-			result = EURvRUB * number
-			return result
-		case base_currency == "EUR" && target_currency == "USD":
-			result = EURvUSD * number
-			return result
-		case base_currency == "RUB" && target_currency == "USD":
-			result = RUBvUSD * number
-			return result
-		case base_currency == "RUB" && target_currency == "EUR":
-			result = RUBvEUR * number
-			return result	
-	}
+	a := m[base_currency][target_currency]
 
-	return 0
+	result = number * a
+
+
+	return result
 
 	
 }
