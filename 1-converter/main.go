@@ -23,11 +23,11 @@ func main() {
 			"EUR" : 0.011,
 		},
 	}
-	fmt.Println(full_kurc["EUR"]["RUB"])
+	fmt.Println(full_kurc["EUR"])
 
 		var  namber float64
 		var base_currency , target_currency string
-		var err , ererr , err2  error
+		var err , ererr   error
 		for {
 			base_currency ,  err = outprint()
 			if err != nil {
@@ -48,13 +48,10 @@ func main() {
 			}
 		}
 		for{
-			target_currency , err2 = reverschat(base_currency)
-			if err2 != nil {
-				continue	
-			}else{
-				fmt.Println("Вы выбрали :", target_currency)
-				break
-			}
+			target_currency = reverschat(base_currency , full_kurc)
+			
+			fmt.Println("Вы выбрали :", target_currency)
+			break
 		}
 		
 		result := valute(namber , base_currency , target_currency, full_kurc)
@@ -98,36 +95,15 @@ func namberto() (float64 , error){
 }
 
 
-func reverschat(base_currency string) (string ,error) {
+func reverschat(base_currency string, full_kurc valutemap) (string ) {
 	var target_currency string
-	switch {
-		case base_currency == "EUR":
-			fmt.Print("Введите целивую валюту(RUB ,USD) :")
-			fmt.Scan(&target_currency)
-			if target_currency != "EUR" && target_currency != "USD" && target_currency != "RUB"  {
-				return "",  errors.New("NO")
-			}
-			return target_currency , nil
-
-		case base_currency == "RUB":
-			fmt.Print("Введите целивую валюту(EUR ,USD) :")
-			fmt.Scan(&target_currency)
-			if target_currency != "EUR" && target_currency != "USD" && target_currency != "RUB"  {
-				return "",  errors.New("NO")
-			}
-			return target_currency , nil
-
-		case base_currency == "USD":
-			fmt.Print("Введите целивую валюту(RUB ,EUR) :")
-			fmt.Scan(&target_currency)
-			if target_currency != "EUR" && target_currency != "USD" && target_currency != "RUB"  {
-				return "",  errors.New("NO")
-			}
-			return target_currency , nil
-
+	viktor := []string{}
+	for key , _ := range full_kurc[base_currency]{
+		viktor = append(viktor, key)
 	}
-	
-	return "" , nil
+	fmt.Print("Выберите целевую валютную пару",viktor , ": ")
+	fmt.Scan(&target_currency)
+	return target_currency 
 }
 	
 	
