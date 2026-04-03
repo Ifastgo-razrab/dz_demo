@@ -5,7 +5,7 @@ import (
 	"errors"
 )
 
-type valutemap = map[string]map[string]float64
+type valutemap =  map[string]map[string]float64
 
 func main() {
 	fmt.Println("___Программа для обмена Валют____")
@@ -23,6 +23,7 @@ func main() {
 			"EUR" : 0.011,
 		},
 	}
+	
 	fmt.Println(full_kurc["EUR"])
 
 		var  namber float64
@@ -47,14 +48,16 @@ func main() {
 				break
 			}
 		}
+		ykaz_full_kurc := &full_kurc
 		for{
-			target_currency = reverschat(base_currency , full_kurc)
+			
+			target_currency = reverschat(ykaz_full_kurc , base_currency)
 			
 			fmt.Println("Вы выбрали :", target_currency)
 			break
 		}
 		
-		result := valute(namber , base_currency , target_currency, full_kurc)
+		result := valute(namber , base_currency , target_currency, ykaz_full_kurc)
 		fmt.Println("Результат : ", result)
 		
 
@@ -95,10 +98,10 @@ func namberto() (float64 , error){
 }
 
 
-func reverschat(base_currency string, full_kurc valutemap) (string ) {
+func reverschat(full_kurc *valutemap , base_currency string) (string ) {
 	var target_currency string
 	viktor := []string{}
-	for key , _ := range full_kurc[base_currency]{
+	for key , _ := range (*full_kurc)[base_currency]{
 		viktor = append(viktor, key)
 	}
 	fmt.Print("Выберите целевую валютную пару",viktor , ": ")
@@ -112,9 +115,9 @@ func reverschat(base_currency string, full_kurc valutemap) (string ) {
 
 
 
-func valute(number float64, base_currency string, target_currency string , m valutemap) float64{
+func valute(number float64, base_currency string, target_currency string , m *valutemap) float64{
 	var result float64
-	a := m[base_currency][target_currency]
+	a := (*m)[base_currency][target_currency]
 
 	result = number * a
 
