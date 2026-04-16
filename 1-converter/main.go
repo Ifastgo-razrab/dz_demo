@@ -29,6 +29,8 @@ func main() {
 		var  namber float64
 		var base_currency , target_currency string
 		var err , ererr   error
+
+
 		for {
 			base_currency ,  err = outprint()
 			if err != nil {
@@ -42,13 +44,16 @@ func main() {
 
 		for {
 			namber , ererr  = namberto()
+
 			if ererr != nil {
 				continue
 			}else{
 				break
 			}
 		}
+
 		ykaz_full_kurc := &full_kurc
+
 		for{
 			
 			target_currency = reverschat(ykaz_full_kurc , base_currency)
@@ -59,13 +64,6 @@ func main() {
 		
 		result := valute(namber , base_currency , target_currency, ykaz_full_kurc)
 		fmt.Println("Результат : ", result)
-		
-
-
-		
-		
-	
-
 }
 
 
@@ -73,47 +71,46 @@ func main() {
 func outprint() (  string , error)  {
 	var base_currency string
 	
-	
-	
 	fmt.Print("Введите исходную валюту (EUR , USD ,RUB): ")
 	fmt.Scan(&base_currency)
+
 	if base_currency != "EUR" && base_currency != "USD" && base_currency != "RUB"  {
 			return "",  errors.New("NO")
 	}
-	return base_currency , nil
 
+	return base_currency , nil
 }
 
 
 
 func namberto() (float64 , error){
 	var  number float64
+
 	fmt.Print("Введите количество валюты : ")
 	fmt.Scan(&number)
+
 	if number <= 0{
 			return  0,  errors.New("NO")			
 	}
-	return number , nil
 
+	return number , nil
 }
 
 
 func reverschat(full_kurc *valutemap , base_currency string) (string ) {
 	var target_currency string
 	viktor := []string{}
+
 	for key , _ := range (*full_kurc)[base_currency]{
 		viktor = append(viktor, key)
 	}
+
 	fmt.Print("Выберите целевую валютную пару",viktor , ": ")
 	fmt.Scan(&target_currency)
+
 	return target_currency 
 }
 	
-	
-
-
-
-
 
 func valute(number float64, base_currency string, target_currency string , m *valutemap) float64{
 	var result float64
@@ -121,8 +118,6 @@ func valute(number float64, base_currency string, target_currency string , m *va
 
 	result = number * a
 
-
 	return result
 
-	
 }

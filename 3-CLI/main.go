@@ -4,6 +4,10 @@ package main
 import (
 	"fmt"
 	"time"
+	"CLI/bins"
+	"CLI/api"
+	"CLI/file"
+	"CLI/storage"
 
 )
 
