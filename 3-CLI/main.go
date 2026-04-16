@@ -2,24 +2,19 @@ package main
 
 
 import (
-	"fmt"
-	"time"
-	"CLI/bins"
-	"CLI/api"
-	"CLI/file"
-	"CLI/storage"
-
+	
 )
+
 
 
 type Bin struct{
 	id string
 	private bool
-	createdAT time.Time
+	createdAT int
 	name string
 }
 
-func BinInsal(id string , privatee bool, createdAT time.Time , name string)(Bin){
+func BinInsal(id string , privatee bool, createdAT int , name string)(Bin){
 	return Bin{
 		id : id,
 		private: privatee,
@@ -28,9 +23,7 @@ func BinInsal(id string , privatee bool, createdAT time.Time , name string)(Bin)
 	}
 }
 
-
 func main(){
 	BinList := []Bin{}
-	fmt.Println(BinList)
-
+	_ =BinList
 }
