@@ -20,16 +20,16 @@ func Writefile(content []byte, file string) {
 }
 
 
-func ReadFile(file string)([]byte){
+func ReadFile(file string)([]byte , error){
 	data , err := os.ReadFile(file)
 	if err != nil{
 		fmt.Println("File:", err)
 		
 	}
-	return data
+	return data , err
 
 
 }
-func isJson(file string)bool{
+func IsJson(file string)bool{
 	return strings.HasSuffix(file , ".json")
 }

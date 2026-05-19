@@ -5,7 +5,6 @@ import (
 	"CLI/file"
 	"encoding/json"
 	"fmt"
-	"os"
 )
 
 type StorageBin struct{
@@ -25,8 +24,8 @@ func (Sbin StorageBin) NiwBinJson(files string){
 	file.Writefile(data , files)
 }
 
-func ReadBinJson(file string){
-	data ,  err := os.ReadFile(file)
+func ReadBinJson(files string){
+	data ,  err := file.ReadFile(files)
 	if err!= nil {
 		fmt.Println("File:" , err)
 	}
