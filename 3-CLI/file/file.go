@@ -6,8 +6,18 @@ import (
 	"strings"
 )
 
-func Writefile(content []byte, file string) {
-	data, err := os.Create(file)
+type Dbfile struct{
+	Name string
+}
+func NewDbFile(name string)*Dbfile{
+	return &Dbfile{
+		Name: name,
+	}
+}
+
+
+func (db *Dbfile)Writefile(content []byte){
+	data, err := os.Create(db.Name)
 	if err != nil {
 		fmt.Println("Файл :" , err )
 	}
@@ -19,17 +29,16 @@ func Writefile(content []byte, file string) {
 	fmt.Println("Файл успешно записан")
 }
 
-
-func ReadFile(file string)([]byte , error){
-	data , err := os.ReadFile(file)
+func (db *Dbfile)ReadFile()([]byte , error){
+	data , err := os.ReadFile(db.Name)
 	if err != nil{
 		fmt.Println("File:", err)
 		
 	}
 	return data , err
-
-
 }
-func IsJson(file string)bool{
-	return strings.HasSuffix(file , ".json")
+
+func (db *Dbfile)Isjson()(bool){
+	return strings.HasSuffix(db.Name , ".json")
 }
+

@@ -2,30 +2,35 @@ package storage
 
 import (
 	"CLI/bins"
-	"CLI/file"
 	"encoding/json"
 	"fmt"
 )
+type Bd interface{
+	ReadFile()([]byte , error)
+	Writefile([]byte)
+}
 
 type StorageBin struct{
 	Bins []bins.Bin `json:"bins"`
+	db Bd
 }
 
 func (s *StorageBin) NiwBin(bin bins.Bin){
 	s.Bins =append(s.Bins, bin)
 }
 
-func (Sbin StorageBin) NiwBinJson(files string){
+func (Sbin *StorageBin ) NiwBinJson(){
 	data , err := json.Marshal(Sbin)
 	if err != nil{
 		fmt.Println("File :", err)
 	}
+	Sbin.db.Writefile(data)
 	
-	file.Writefile(data , files)
 }
 
-func ReadBinJson(files string){
-	data ,  err := file.ReadFile(files)
+func(a *StorageBin) ReadBinJson(){
+	
+	data ,  err := a.db.ReadFile()
 	if err!= nil {
 		fmt.Println("File:" , err)
 	}

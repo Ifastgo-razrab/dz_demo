@@ -20,5 +20,5 @@ func main(){
 	staragebin.NiwBin(bin)
 
 
-	storage.ReadBinJson("stranage.json")
+	
 }
