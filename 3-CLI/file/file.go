@@ -9,6 +9,7 @@ import (
 type Dbfile struct{
 	Name string
 }
+
 func NewDbFile(name string)*Dbfile{
 	return &Dbfile{
 		Name: name,

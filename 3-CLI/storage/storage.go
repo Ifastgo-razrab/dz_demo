@@ -12,7 +12,7 @@ type Bd interface{
 
 type StorageBin struct{
 	Bins []bins.Bin `json:"bins"`
-	db Bd
+	Db Bd
 }
 
 func (s *StorageBin) NiwBin(bin bins.Bin){
@@ -24,13 +24,13 @@ func (Sbin *StorageBin ) NiwBinJson(){
 	if err != nil{
 		fmt.Println("File :", err)
 	}
-	Sbin.db.Writefile(data)
+	Sbin.Db.Writefile(data)
 	
 }
 
 func(a *StorageBin) ReadBinJson(){
 	
-	data ,  err := a.db.ReadFile()
+	data ,  err := a.Db.ReadFile()
 	if err!= nil {
 		fmt.Println("File:" , err)
 	}
