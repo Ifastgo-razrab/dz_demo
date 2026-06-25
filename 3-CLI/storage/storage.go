@@ -31,7 +31,7 @@ func (Sbin *StorageBin ) NiwBinJson(){
 func(a *StorageBin) ReadBinJson(){
 	
 	data ,  err := a.Db.ReadFile()
-	if err!= nil {
+	if err != nil {
 		fmt.Println("File:" , err)
 	}
 	var Sbin StorageBin
