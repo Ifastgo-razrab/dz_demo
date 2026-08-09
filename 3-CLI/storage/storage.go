@@ -31,16 +31,17 @@ func (Sbin *StorageBin ) NiwBinJson(){
 func(a *StorageBin) ReadBinJson(){
 	
 	data ,  err := a.Db.ReadFile()
-	if err!= nil {
+	if err != nil {
 		fmt.Println("File:" , err)
 	}
-	var Sbin StorageBin
-	err = json.Unmarshal(data , &Sbin)
+	err = json.Unmarshal(data , a)
+	
 	if err != nil{
 		fmt.Println("File:q" , err)
 	}
-	for _ , data := range Sbin.Bins{
-		fmt.Println(data)
-	}
-
+}
+func (s *StorageBin) WriteBinJson(bins bins.Bin){
+	s.ReadBinJson()
+	s.NiwBin(bins)
+	s.NiwBinJson()
 }
